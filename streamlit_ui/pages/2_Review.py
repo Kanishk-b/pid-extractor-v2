@@ -43,7 +43,7 @@ if drawing_id:
                 
                 with col1:
                     try:
-                        st.image(store.get_bytes(drawing_id, image_path), caption=f"Found in: {raw_region_id}", format="PNG")
+                        st.image(store.get_bytes(drawing_id, image_path), caption=f"Found in: {raw_region_id}")
                     except Exception as img_error:
                         st.error(f"CRITICAL ERROR: {img_error}")
                         st.warning(f"I tried looking for the image at this exact path: {image_path}")
