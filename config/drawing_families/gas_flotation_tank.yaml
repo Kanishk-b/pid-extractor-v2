@@ -1,0 +1,30 @@
+family_id: "gas_flotation_tank"
+family_name: "Gas Flotation Tank Schematic"
+description: "P&ID for water treatment flotation tanks, usually 4 chambers."
+convention: "ISA S5.1"
+equipment_family: "Flotation Tank"
+
+tag_schemas:
+  INSTRUMENT_TAG: "^[0-9]{1,3}[A-Z]{2,5}-[0-9]{3,4}[A-Z]?$"
+  EQUIPMENT_TAG: "^[A-Z]-[0-9]{3,5}[A-Z]?$"
+  LINE_TAG: "^[0-9]+\"-[A-Z]{1,3}-[0-9]{3,5}-[0-9]{3,5}(-[A-Z0-9]+)?$"
+  NOTE_REF: "^NOTE-[0-9]{1,3}$"
+
+symbol_vocabulary:
+  - ["Circle with horizontal line", "Discrete Field Instrument"]
+  - ["Square with circle inside", "Shared Control / DCS"]
+
+region_template:
+  - ["top_left", [0.0, 0.0, 0.5, 0.5]]
+  - ["top_right", [0.5, 0.0, 1.0, 0.5]]
+  - ["bottom_left", [0.0, 0.5, 0.5, 1.0]]
+  - ["bottom_right", [0.5, 0.5, 1.0, 1.0]]
+
+expected_tag_count:
+  mean: 150
+  stddev: 30
+
+example_tags:
+  - "T-7572"
+  - "P-7580"
+  - "48FCV-3071"

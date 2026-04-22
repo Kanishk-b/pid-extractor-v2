@@ -1,0 +1,13 @@
+You previously extracted the following from this drawing region:
+
+<first_pass_json>
+{{ first_pass_json }}
+</first_pass_json>
+
+Review this extraction critically. Answer the following:
+1. Are there any tags visible in the image that you missed? List them in the same schema.
+2. For each tag marked confidence=low, re-examine and either upgrade (if you can now read it clearly) or retain as low.
+3. Are any of the extracted tags likely duplicates of each other?
+4. Are any extracted tags actually not tags (mis-classified symbols)?
+
+Output a revised JSON object in the same schema, with an additional top-level field "review_notes" describing what you changed and why. Output ONLY the JSON object. No prose, no markdown fences.

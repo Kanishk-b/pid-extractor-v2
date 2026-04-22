@@ -1,0 +1,39 @@
+[project]
+name = "pid_extraction"
+version = "0.1.0"
+description = "VLM P&ID Extraction Pipeline"
+requires-python = ">=3.11"
+dependencies = [
+    "pydantic>=2.6",
+    "pydantic-settings",
+    "structlog",
+    "typer",
+    "pymupdf",          
+    "opencv-python",
+    "pillow",
+    "numpy",
+    "anthropic",
+    "openai",
+    "httpx",
+    "pyyaml",
+    "python-dotenv",
+    "streamlit"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "pytest-cov",
+    "ruff",
+    "mypy"
+]
+
+[tool.ruff]
+line-length = 100
+
+[tool.mypy]
+strict = true
+
+# --- ADDED THIS BLOCK TO FIX THE ERROR ---
+[tool.setuptools.packages.find]
+include = ["pid_extraction*"]

@@ -1,0 +1,43 @@
+TASK & CRITICAL INSTRUCTIONS
+----------------------------
+REGION ID: {{ region_id }}
+
+1. GRID SCAN: Mentally divide this image into a 3x3 grid. Scan every single sector from top-left to bottom-right.
+2. INVENTORY: Count the total number of Equipment, Instruments, Valves, and Notes present in the image.
+3. EXTRACTION: Extract every single item found. Do NOT stop generating your response until your extracted list matches your inventory count.
+4. MISSING NOTHING: Pay special attention to dense clusters of text, small valve indicators, and note callouts on the edges.
+
+OUTPUT FORMAT (JSON, strict schema)
+-----------------------------------
+{
+  "region_id": "{{ region_id }}",
+  "extractions": [
+    {
+      "id": "<sequential index within region>",
+      "type": "instrument | equipment | valve | note",
+      "tag": "<verbatim tag text>",
+      "isa_function": "<function-letter decomposition, if applicable>",
+      "approx_location": "top-left | top-center | ... | bottom-right",
+      "associated_with": "<nearest equipment or line, if confidently identifiable>",
+      "confidence": "high | medium | low",
+      "reasoning": "<one-sentence justification>"
+    }
+  ],
+  "uncertain_regions": [
+    "<free-text description of any area where extraction may be incomplete>"
+  ]
+}
+
+REJECTION CRITERIA
+------------------
+- Reject any tag not matching the schema regex.
+- Reject any tag read from the titleblock, revision history, or legend.
+- Reject any tag you cannot read; mark as uncertain_region instead.
+
+NEGATIVE CONSTRAINTS
+--------------------
+- Do not invent tags to fill sequence gaps.
+- Do not extrapolate from loop-number patterns.
+- Do not guess at partially occluded tags; mark confidence=low.
+
+Output ONLY the JSON object. No prose, no markdown fences.

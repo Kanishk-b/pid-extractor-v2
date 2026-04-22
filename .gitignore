@@ -1,0 +1,17 @@
+# Environments
+venv/
+.env
+
+# Python build artifacts
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Project specifics
+artifacts/
+*.pdf

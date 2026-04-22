@@ -1,0 +1,15 @@
+pydantic>=2.6
+pydantic-settings
+structlog
+typer
+pymupdf
+opencv-python
+pillow
+numpy
+anthropic
+openai
+httpx
+pyyaml
+python-dotenv
+streamlit
+jinja2

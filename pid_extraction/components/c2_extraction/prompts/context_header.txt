@@ -1,0 +1,21 @@
+DRAWING METADATA
+----------------
+Project        : {{ project_name }}
+Drawing ID     : {{ drawing_id }}
+Convention     : {{ convention }}
+Equipment type : {{ equipment_family }}
+Region         : {{ region_label }}
+
+TAG SCHEMA (strict)
+-------------------
+{% for tag_type, pattern in tag_schemas.items() %}
+{{ tag_type }}: {{ pattern }}
+{% endfor %}
+
+Valid examples   : {{ example_tags | join(', ') }}
+
+SYMBOL VOCABULARY
+-----------------
+{% for shape, meaning in symbol_vocabulary %}
+- {{ shape }}  =>  {{ meaning }}
+{% endfor %}
