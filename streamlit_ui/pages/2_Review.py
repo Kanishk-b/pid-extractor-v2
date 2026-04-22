@@ -16,7 +16,7 @@ if drawing_id:
         pending_items = [i for i in state.get("items", []) if i["status"] == "pending"]
         
         if not pending_items:
-            st.success("🎉 Queue empty! Move to Drawing Summary.")
+            st.success("Queue empty! Move to Drawing Summary.")
         else:
             # Grab the highest priority item
             pending_items.sort(key=lambda x: x["priority"], reverse=True)
@@ -28,27 +28,24 @@ if drawing_id:
             if extraction:
                 st.subheader(f"Reviewing Tag: {extraction.get('tag')}")
                 
-                # --- Handle merged region IDs ---
+                # --- THE FIX: Handle merged region IDs ---
                 raw_region_id = extraction.get('region_id', 'R01')
+                # If it's merged like "R03, R04", just grab the first one to show the user
                 primary_region = raw_region_id.split(",")[0].strip()
                 
                 region_info = next((r for r in manifest.get("regions", []) if r["region_id"] == primary_region), None)
                 
-                # Force forward slashes to guarantee Linux compatibility
+                # Ensure Linux-safe paths so the image doesn't break on Streamlit Cloud
                 image_path = region_info["file_path"].replace("\\", "/") if region_info else f"02_regions/{primary_region}.png"
+                # -----------------------------------------
                 
                 col1, col2, col3 = st.columns([2, 2, 1])
                 
                 with col1:
-                    # --- THE IMAGE FIX ---
                     try:
-                        img_bytes = store.get_bytes(drawing_id, image_path)
-                        # Explicitly declare it's a PNG to stop Streamlit from guessing
-                        st.image(img_bytes, caption=f"Found in: {raw_region_id}", format="PNG")
+                        st.image(store.get_bytes(drawing_id, image_path), caption=f"Found in: {raw_region_id}", format="PNG")
                     except Exception as img_error:
-                        st.error(f"Image Missing! The server cannot find '{image_path}'. Did you run the extraction pipeline on the cloud app?")
-                        st.code(str(img_error))
-                    # ---------------------
+                        st.error("Image missing on server. Try re-running the extraction!")
                     
                 with col2:
                     with st.form("review_form"):
@@ -58,6 +55,7 @@ if drawing_id:
                         notes = st.text_area("Reviewer Notes")
                         
                         if st.form_submit_button("Submit Decision"):
+                            # Update State
                             active_item["status"] = "decided"
                             active_item["reviewer_decision"] = decision
                             active_item["corrected_tag"] = corrected_tag
@@ -73,4 +71,4 @@ if drawing_id:
                     st.info(f"**Priority Score:** {active_item.get('priority')}")
                     
     except Exception as e:
-        st.error(f"Error loading data: {e}. Are you sure you ran the pipeline for this Drawing ID?")
+        st.error(f"Error loading data: {e}")
